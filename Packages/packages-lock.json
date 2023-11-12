@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.metroidvania.movement": {
+      "version": "https://github.com/Geraldclarkaudio/MetroidvaniaMovementPackage.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "3266ca4001aab66b8a5e78aebf9462e59afb39dd"
+    },
     "com.unity.2d.animation": {
       "version": "9.0.4",
       "depth": 0,
