@@ -74,7 +74,7 @@ public class PlayerMovement : MonoBehaviour
     //use this to get the surface normal of the wall. 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.collider.CompareTag("Wall"))
+        if (hit.collider.CompareTag("Wall") || hit.collider.CompareTag("Climbable"))
         {
             Debug.DrawRay(hit.point, hit.normal, Color.yellow);
             wallSurfaceNormal = hit.normal;
@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (GroundChecker() == true && _jumped == false && _climbing == true) // if on the ground and not jumping
+        if (GroundChecker() == true && _jumped == false) // if on the ground and not jumping
         {
             direction.y = 0; // dont constantly drop the y value. 
         }
@@ -129,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
         {
             direction.z = moveLR.x;
         }
-        if(_climbing == true)
+        if (_climbing == true)
         {
             direction.y = moveUD.y;
         }
@@ -152,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
     private void Jump() // called on Jump_performed
     {
         ///DOUBLE JUMP
-        if (_jumped == true && _canDoubleJump == true) // if you just pressed jump while having already jumped
+        if (_jumped == true && _canDoubleJump == true && _onWall == false && _climbing == false) // if you just pressed jump while having already jumped
         {
             direction.y = 0;
             direction.y += _jumpHeight;
@@ -168,12 +168,24 @@ public class PlayerMovement : MonoBehaviour
         //WALL JUMP
         if (WallChecker() == true)
         {
+            _gravity = 6.81f; // makes it a little easier to jump up walls
             direction = new Vector3(0, _jumpHeight, wallSurfaceNormal.z * _wallJumpForce);
             _jumped = true; // you jumped
             _canDoubleJump = true; // since you just jumped from the wall, double jumping is possible
-            _gravity = 6.81f; // makes it a little easier to jump up walls
             wallDetectorCollider.size = new Vector3(0, 0, 0); // sets wall checker to 0 for 0.1 seconds so it will retrigger the OnWall()
             StartCoroutine(SetSize_WallChecker());
+        }
+        //CLIMABLE JUMP OFF
+        if(_climbing == true) /// falls off instead of forces itself up... not sure why..but i can dig it. 
+        {
+            _gravity = 6.81f; // makes it a little easier to jump up walls
+            wallDetectorCollider.size = new Vector3(0, 0, 0);
+            StartCoroutine(SetSize_WallChecker());
+            direction = new Vector3(0, _jumpHeight, wallSurfaceNormal.z * _wallJumpForce);
+            _jumped = true; // you jumped
+            _canDoubleJump = true; // since you just jumped from the wall, double jumping is possible
+            _input.Player.LeftRightMove.Enable();
+            _input.Player.UpDownMove.Disable();
         }
     }
     #endregion
@@ -189,25 +201,26 @@ public class PlayerMovement : MonoBehaviour
 
     public void StandUp() // called when exiting the climb up animation?
     {
-        _canMove = true;
-        transform.position = activeLedge.standPosition.transform.position;
-        _controller.enabled = true;
-        activeLedge = null;
-        _onLedge = false;
+        if(activeLedge != null)
+        {
+            _canMove = true;
+            transform.position = activeLedge.standPosition.transform.position;
+            _controller.enabled = true;
+            activeLedge = null;
+            _onLedge = false;
+        } 
     }
     #endregion
 
     #region Climbable
     public void OnClimbable(Climbable currentClimbable)
     {
-        _canDoubleJump = false;
-        _canJump = false;
-
+        _canJump = true;
         _climbing = true;
         activeClimbable = currentClimbable;
         //set climb animation idle    
         direction.y = 0;
-        _gravity = 0;
+        
         _input.Player.LeftRightMove.Disable();
         _input.Player.UpDownMove.Enable();
     }
@@ -215,21 +228,23 @@ public class PlayerMovement : MonoBehaviour
     public void LeftClimbable()
     {
         _climbing = false;
-        _canJump = true;
         activeClimbable = null;
-        _gravity = 9.81f;
+        //_gravity = 9.81f;
     }
 
     public void ClimbUp()
     {
-        _controller.enabled = false;
-        transform.position = activeClimbable.standPoint.transform.position;
-        wallDetectorCollider.size = new Vector3(0, 0, 0);
-        StartCoroutine(SetSize_WallChecker());
-        _climbing = false;
-        _canJump = true;
-        _gravity = 9.81f;
-        _controller.enabled = true;
+        if (activeClimbable != null)
+        {
+            _controller.enabled = false;
+            transform.position = activeClimbable.standPoint.transform.position;
+            wallDetectorCollider.size = new Vector3(0, 0, 0);
+            StartCoroutine(SetSize_WallChecker());
+            _climbing = false;
+            _canJump = true;
+            _gravity = 9.81f;
+            _controller.enabled = true;
+        }
     }
     #endregion
     //handles stomping
@@ -287,7 +302,7 @@ public class PlayerMovement : MonoBehaviour
     }
     IEnumerator EnableControls()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.125f);
         _input.Player.LeftRightMove.Enable();
     }
     IEnumerator SetSize_WallChecker()

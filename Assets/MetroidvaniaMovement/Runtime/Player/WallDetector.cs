@@ -22,9 +22,16 @@ public class WallDetector : MonoBehaviour
 
             _player.OnClimbable(climbable); // obtain reference to this current climbable
         }
-        if(other.CompareTag("ClimbUp"))
+        if(other.CompareTag("ClimbUp")) ///NEEDS WORK
         {
-            _player.ClimbUp();
+            if (_player.transform.position.y > other.transform.position.y)
+            {
+                Debug.Log("Hit from above");
+            }
+            else if(_player.transform.position.y < other.transform.position.y)
+            {
+                _player.ClimbUp();
+            } 
         }
     }
 
@@ -34,5 +41,10 @@ public class WallDetector : MonoBehaviour
         {
             _player.NotOnWall(); // flips groundeded to true
         }
+        if (other.CompareTag("Climbable"))
+        {
+            _player.LeftClimbable();
+        }
+
     }
 }

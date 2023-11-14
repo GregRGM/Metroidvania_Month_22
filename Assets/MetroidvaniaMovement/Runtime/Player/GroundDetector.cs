@@ -35,7 +35,7 @@ public class GroundDetector : MonoBehaviour
     {
         if (other.CompareTag("Ground"))
         {
-            _player.NotGrounded(); // flips groundeded to true
+            _player.NotGrounded();
         }
     }
 }
