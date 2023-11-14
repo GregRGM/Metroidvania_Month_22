@@ -1,0 +1,16 @@
+{
+  "name": "com.metroidvania.movement",
+  "version": "1.0.0",
+  "displayName": "Metroidvania Movement",
+  "description": "This is a package built to quickly and easily set up movement for a metroidvania.",
+ "keywords": [
+    "keyword1",
+    "keyword2",
+    "keyword3"
+  ],
+  "author": {
+    "name": "EvilElephantGames",
+    "email": "evilelephantgames@gmail.com",
+    "url": "https://www.unity3d.com"
+  }
+}
