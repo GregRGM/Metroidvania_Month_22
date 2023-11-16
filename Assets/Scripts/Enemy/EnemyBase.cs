@@ -10,6 +10,7 @@ public abstract class EnemyBase : MonoBehaviour
         attacking,
         death
     }
+
     [SerializeField]
     protected EnemyState enemyState;
 

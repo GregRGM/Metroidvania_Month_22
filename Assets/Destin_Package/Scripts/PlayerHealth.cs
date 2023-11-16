@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
@@ -17,12 +18,13 @@ public class PlayerHealth : MonoBehaviour
     bool regenerate;
 
     int upgradeIndex = 1;
-
+    [SerializeField]
+    UnityEvent deathEvent;
     private void Start()
     {
         maxHealth.SetValue(100);
         currentHealth.SetValue(maxHealth);
-        healthBar.value = 1;
+        //healthBar.value = 1;
     }
 
     private void Update()
@@ -50,14 +52,17 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage()
+    public void TakeDamage(DamageDealer damageDealer)
     {
-        DamageDealer damage = thingToCauseDamage.GetComponent<DamageDealer>();
-
         regenerate = false;
         regenWaitTime = 3;
         regenActive = true;
-        currentHealth.ApplyChange(-damage.damageAmount.Value);
+        currentHealth.ApplyChange(-damageDealer.damageAmount.Value);
+
+        if (currentHealth.Value <= 0)
+        {
+            deathEvent.Invoke();
+        }
     }
 
     public void UpdateHealthBar()
@@ -75,5 +80,20 @@ public class PlayerHealth : MonoBehaviour
         currentHealth.ApplyChange(10);
         upgradeIndex++;
         UpdateHealthBar();
+    }
+
+    public void Die()
+    {
+        Debug.Log("YOU SUCK");
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        DamageDealer damageDealer = other.GetComponent<DamageDealer>();
+
+        if (damageDealer != null)
+        {
+            TakeDamage(damageDealer);
+        }
     }
 }

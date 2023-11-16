@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82fb6de704aeb724aabb40707d715410, type: 3}
-  m_Name: Player_Health
+  m_Script: {fileID: 11500000, guid: 5bc4aad8fc4b7bb40930e721bdfa0204, type: 3}
+  m_Name: PlayerDeath
   m_EditorClassIdentifier: 
-  Value: -3.3613915
