@@ -8,6 +8,8 @@ public class BombEnemy : EnemyBase
     private bool _looping;
     [SerializeField]
     private float _countdownTimer;
+    [SerializeField]
+    private GameObject _explosion;
 
     public override void Start()
     {
@@ -18,8 +20,10 @@ public class BombEnemy : EnemyBase
     public override void Attack()
     {
         _countdownTimer -= Time.deltaTime;
+
         if(_countdownTimer <= 0)
         {
+            Instantiate(_explosion, transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
     }

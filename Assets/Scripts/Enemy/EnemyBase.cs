@@ -10,6 +10,7 @@ public abstract class EnemyBase : MonoBehaviour
         attacking,
         death
     }
+    [SerializeField]
     protected EnemyState enemyState;
 
     [SerializeField]
@@ -83,13 +84,13 @@ public abstract class EnemyBase : MonoBehaviour
             if (_switching == false) // if moving up incrementally through waypoints
             {
                 transform.position = Vector3.MoveTowards(transform.position, _waypoints[_currentTarget].position, _speed * Time.deltaTime);
-                transform.LookAt(_waypoints[1].position);
             }
             else if (_switching == true)
             {
                 transform.position = Vector3.MoveTowards(transform.position, _waypoints[_currentTarget].position, _speed * Time.deltaTime);
-                transform.LookAt(_waypoints[0].position);
             }
+
+            transform.LookAt(_waypoints[_currentTarget].position);
         }
 
         else if (distanceToPlayer < 4)
