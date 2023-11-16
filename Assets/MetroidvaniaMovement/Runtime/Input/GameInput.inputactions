@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "BasicAttack",
+                    "type": "Button",
+                    "id": "2db320de-1666-4492-8f62-ef50052e8ddf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -176,7 +185,7 @@
                 {
                     "name": "",
                     "id": "c13cb548-a885-4ab7-b87a-a14ede367cc5",
-                    "path": "<Keyboard>/e",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -187,7 +196,7 @@
                 {
                     "name": "",
                     "id": "6c59afe7-fbe8-42da-954c-ac7000ef0f54",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -282,6 +291,28 @@
                     "action": "UpDownMove",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "383a9452-570e-4276-b3bd-f74403ad3953",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BasicAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "97886b67-afe9-407a-acfe-795772a22456",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "BasicAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
