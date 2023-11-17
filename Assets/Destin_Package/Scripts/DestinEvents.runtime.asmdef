@@ -1,10 +1,7 @@
 {
-    "name": "EvilElephantGames.MetroidvaniaMovement.runtime",
+    "name": "DestinEvents.runtime",
     "rootNamespace": "",
-    "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:516ace2320046734d8ab8a56b874ad2a"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

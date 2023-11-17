@@ -101,4 +101,20 @@ public abstract class EnemyBase : MonoBehaviour
     }
 
     public abstract void Attack();
+    public abstract void TakeDamage(DamageDealer damageDealer);
+
+    public abstract void Death();
+
+    private void OnTriggerEnter(Collider other)
+    {
+        DamageDealer damageDealer = other.GetComponent<DamageDealer>();
+
+        if (damageDealer != null)
+        {
+            if(other.CompareTag("PlayerAttack"))
+            {
+                TakeDamage(damageDealer);
+            }
+        }
+    }
 }

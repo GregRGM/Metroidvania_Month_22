@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
-{
+{ 
     private GameInput _input;
     private CharacterController _controller;
 
@@ -51,7 +51,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private bool _climbing = false;
 
-
     Vector3 direction; // direction of movment
 
     [SerializeField]
@@ -59,8 +58,12 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 originalSize; // box collider's original size
     private Vector3 wallSurfaceNormal; // obtained in OnControllerColliderHit()
 
+    PlayerAnimationManager _animManager;
+    private string IDLE_ANIM = "Idle";
+    private string WALK_ANIM = "Walk";
     void Start()
     {
+        _animManager = GetComponent<PlayerAnimationManager>();
         _controller = GetComponent<CharacterController>();
         originalSize = wallDetectorCollider.size;
         _input = new GameInput();
@@ -140,10 +143,12 @@ public class PlayerMovement : MonoBehaviour
             facingDirection.y = direction.z > 0 ? 0 : 180;
             transform.localEulerAngles = facingDirection;
             //set animation here. 
+            _animManager.ChangeAnimationState(WALK_ANIM);
         }
         else if (direction.z == 0) //not moving
         {
             //change to idle 
+            _animManager.ChangeAnimationState(IDLE_ANIM);
         }
     }
     #endregion

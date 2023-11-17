@@ -26,4 +26,19 @@ public class PatrolEnemy : EnemyBase
     {
         //swing weapon or something
     }
+
+    public override void TakeDamage(DamageDealer damageDealer)
+    {
+        _health -= damageDealer.damageAmount.Value;
+        if(_health <= 0)
+        {
+            Death();
+        }
+       
+    }
+
+    public override void Death()
+    {
+        Destroy(this.gameObject);
+    }
 }

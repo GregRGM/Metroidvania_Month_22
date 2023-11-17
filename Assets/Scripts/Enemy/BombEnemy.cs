@@ -40,4 +40,12 @@ public class BombEnemy : EnemyBase
         }
     }
 
+    public override void TakeDamage(DamageDealer damageDealer)
+    {
+
+    }
+
+    public override void Death()
+    {
+    }
 }

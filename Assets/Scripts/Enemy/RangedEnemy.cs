@@ -33,4 +33,12 @@ public class RangedEnemy : EnemyBase
         Instantiate(projectile, transform.position, transform.rotation);
         _canFire = Time.time + fireRate;
     }
+
+    public override void TakeDamage(DamageDealer damageDealer)
+    {
+
+    }
+    public override void Death()
+    {
+    }
 }
