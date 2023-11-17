@@ -20,9 +20,13 @@ public class PlayerHealth : MonoBehaviour
     int upgradeIndex = 1;
     [SerializeField]
     UnityEvent deathEvent;
-    
+
+    UIManager _uiManager;
+
     private void Start()
     {
+        _uiManager = FindObjectOfType<UIManager>();
+
         maxHealth.SetValue(100);
         currentHealth.SetValue(maxHealth);
         healthBar.value = 1;
@@ -44,7 +48,7 @@ public class PlayerHealth : MonoBehaviour
         if (regenerate)
         {
             currentHealth.ApplyChange(10 * Time.deltaTime);
-            //UpdateHealthBar();
+            _uiManager.UpdateHealthBar();
             if (currentHealth.Value >= maxHealth.Value)
             {
                 regenerate = false;
@@ -64,6 +68,8 @@ public class PlayerHealth : MonoBehaviour
         {
             deathEvent.Invoke();
         }
+
+        _uiManager.UpdateHealthBar();
     }
 
     //public void UpdateHealthBar()
@@ -86,7 +92,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log("YOU SUCK");
+        Debug.Log("Died");
     }
 
     private void OnTriggerEnter(Collider other)

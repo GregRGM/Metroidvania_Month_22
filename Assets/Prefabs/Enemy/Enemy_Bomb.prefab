@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4069261400175599111}
   - component: {fileID: 8968323973586226207}
   - component: {fileID: 4314653695785899824}
+  - component: {fileID: 8557235646191656206}
   m_Layer: 0
   m_Name: Bomb_Enemy
   m_TagString: Untagged
@@ -100,7 +101,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -120,6 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c75cf83dcbd2df446a55ba9b8837063a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyState: 0
   _speed: 2
   _health: 10
   _waypoints:
@@ -128,7 +130,37 @@ MonoBehaviour:
   - {fileID: 8649148660298862540}
   - {fileID: 1677280500205784625}
   _currentTarget: 0
-  _looping: 1
+  _looping: 0
+  _countdownTimer: 2
+  _explosion: {fileID: 2255310446009415736, guid: 29514d200d9881b4c8c20b0c40ac5fb9,
+    type: 3}
+--- !u!54 &8557235646191656206
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2934442184291086001}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!1 &6614708305866125030
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,7 +15,6 @@ public class UIManager : MonoBehaviour
 
     public void UpdateHealthBar()
     {
-        Debug.Log("uPDATEhEALTH");
         healthBar.value = currentHealth.Value / maxHealth.Value;
     }
 }
