@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class PatrolEnemy : EnemyBase
 {
+    [SerializeField]
+    private GameObject _attackEffect;
     public override void Start()
     {
         base.Start();
@@ -24,7 +27,14 @@ public class PatrolEnemy : EnemyBase
 
     void SwingWeapon()
     {
-        //swing weapon or something
+        _attackEffect.SetActive(true);
+        StartCoroutine(TurnOffVFX());
+    }
+
+    IEnumerator TurnOffVFX()
+    {
+        yield return new WaitForSeconds(1);
+        _attackEffect.SetActive(false);
     }
 
     public override void TakeDamage(DamageDealer damageDealer)

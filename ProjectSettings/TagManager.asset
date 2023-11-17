@@ -10,6 +10,7 @@ TagManager:
   - Climbable
   - ClimbUp
   - PlayerAttack
+  - PatrolEnemyAttack
   layers:
   - Default
   - TransparentFX
