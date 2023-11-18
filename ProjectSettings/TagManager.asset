@@ -11,6 +11,9 @@ TagManager:
   - ClimbUp
   - PlayerAttack
   - PatrolEnemyAttack
+  - PlayerDamageBox
+  - PlayerGroundChecker
+  - PlayerHands
   layers:
   - Default
   - TransparentFX

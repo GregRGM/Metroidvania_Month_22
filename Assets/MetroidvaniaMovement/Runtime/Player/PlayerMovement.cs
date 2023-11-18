@@ -8,6 +8,7 @@ public class PlayerMovement : MonoBehaviour
 { 
     private InputManager _inputManager;
     private CharacterController _controller;
+    private PlayerInteraction _playerInteraction;
     Vector3 direction; // direction of movment
     [Header("Movement")]
     [SerializeField]
@@ -31,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float doubleJumpMultiplier;
     [SerializeField]
-    private bool _canJump = true;
+    public bool _canJump = true;
     [SerializeField]
     private bool _onWall = false;
 
@@ -71,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         _inputManager = FindAnyObjectByType<InputManager>();
         _animManager = GetComponent<PlayerAnimationManager>();
         _controller = GetComponent<CharacterController>();
+        _playerInteraction = GetComponent<PlayerInteraction>();
         originalSize = wallDetectorCollider.size;
         direction = new Vector3(0, 0, 0); 
     }
@@ -122,17 +124,30 @@ public class PlayerMovement : MonoBehaviour
 
         if (direction.z != 0) // rotate facing direction
         {
-            Vector3 facingDirection = transform.localEulerAngles;
-            facingDirection.y = direction.z > 0 ? 0 : 180;
-            transform.localEulerAngles = facingDirection;
-            //set animation here. 
-            _animManager.ChangeAnimationState(WALK_ANIM);
+            if(_playerInteraction._currentGrabbableObject != null)
+            {
+                //dont rotate player 
+                //change animation to pushing or pulling depending on direction of movement.
+            }
+            else
+            {
+                RotateTowardFacingDirection();
+            }
         }
         else if (direction.z == 0) //not moving
         {
             //change to idle 
             _animManager.ChangeAnimationState(IDLE_ANIM);
         }
+    }
+
+    private void RotateTowardFacingDirection()
+    {
+        Vector3 facingDirection = transform.localEulerAngles;
+        facingDirection.y = direction.z > 0 ? 0 : 180;
+        transform.localEulerAngles = facingDirection;
+        //set animation here. 
+        _animManager.ChangeAnimationState(WALK_ANIM);
     }
     #endregion
     //Jump
