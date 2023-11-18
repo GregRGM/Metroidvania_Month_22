@@ -6,9 +6,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 { 
-    private GameInput _input;
+    private InputManager _inputManager;
     private CharacterController _controller;
-
+    Vector3 direction; // direction of movment
     [Header("Movement")]
     [SerializeField]
     private float _leftRightMoveSpeed;
@@ -51,26 +51,27 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private bool _climbing = false;
 
-    Vector3 direction; // direction of movment
-
+    /// <summary>
+    /// WALL JUMP
+    /// </summary>
     [SerializeField]
     private BoxCollider wallDetectorCollider;
     private Vector3 originalSize; // box collider's original size
     private Vector3 wallSurfaceNormal; // obtained in OnControllerColliderHit()
 
+    /// <summary>
+    /// ANIMATION
+    /// </summary>
     PlayerAnimationManager _animManager;
     private string IDLE_ANIM = "Idle";
     private string WALK_ANIM = "Walk";
+
     void Start()
     {
+        _inputManager = FindAnyObjectByType<InputManager>();
         _animManager = GetComponent<PlayerAnimationManager>();
         _controller = GetComponent<CharacterController>();
         originalSize = wallDetectorCollider.size;
-        _input = new GameInput();
-        _input.Player.Enable();
-        _input.Player.Jump.performed += Jump_performed;
-        _input.Player.PullUp.performed += PullUp_performed;
-        _input.Player.Stomp.performed += Stomp_performed;
         direction = new Vector3(0, 0, 0); 
     }
 
@@ -102,31 +103,13 @@ public class PlayerMovement : MonoBehaviour
 
         direction.y -= _gravity * Time.deltaTime; // constantly apply gravity
     }
-    //new input system 
-    #region PERFORMED METHODS
-    private void Stomp_performed(InputAction.CallbackContext obj)
-    {
-        if(GroundChecker() == false) { Stomp(); }
-    }
 
-    private void PullUp_performed(InputAction.CallbackContext obj)
-    {
-        StandUp(); // move to onanimation exit when that exists. 
-    }
-
-    private void Jump_performed(InputAction.CallbackContext obj)
-    {
-        if(_canJump == false) return;
-        Jump();
-    }
-    #endregion
-    //handles movement on horizontal axis
     #region Movement
     private void LeftRightUpDownMovement()
     {
         //poll the read value from the LeftRightMove action
-        var moveLR = _input.Player.LeftRightMove.ReadValue<Vector2>();
-        var moveUD = _input.Player.UpDownMove.ReadValue<Vector2>();
+        var moveLR = _inputManager._input.Player.LeftRightMove.ReadValue<Vector2>();
+        var moveUD = _inputManager._input.Player.UpDownMove.ReadValue<Vector2>();
 
         if (_onWall == false)
         {
@@ -154,8 +137,9 @@ public class PlayerMovement : MonoBehaviour
     #endregion
     //Jump
     #region JUMP
-    private void Jump() // called on Jump_performed
+    public void Jump() // called on Jump_performed
     {
+        if (_canJump == false) return;
         ///DOUBLE JUMP
         if (_jumped == true && _canDoubleJump == true && _onWall == false && _climbing == false) // if you just pressed jump while having already jumped
         {
@@ -189,8 +173,9 @@ public class PlayerMovement : MonoBehaviour
             direction = new Vector3(0, _jumpHeight, wallSurfaceNormal.z * _wallJumpForce);
             _jumped = true; // you jumped
             _canDoubleJump = true; // since you just jumped from the wall, double jumping is possible
-            _input.Player.LeftRightMove.Enable();
-            _input.Player.UpDownMove.Disable();
+
+            _inputManager._input.Player.LeftRightMove.Enable();
+            _inputManager._input.Player.UpDownMove.Disable();
         }
     }
     #endregion
@@ -217,7 +202,7 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion
 
-    #region Climbable
+    #region Climbing
     public void OnClimbable(Climbable currentClimbable)
     {
         _canJump = true;
@@ -225,9 +210,9 @@ public class PlayerMovement : MonoBehaviour
         activeClimbable = currentClimbable;
         //set climb animation idle    
         direction.y = 0;
-        
-        _input.Player.LeftRightMove.Disable();
-        _input.Player.UpDownMove.Enable();
+
+        _inputManager._input.Player.LeftRightMove.Disable();
+        _inputManager._input.Player.UpDownMove.Enable();
     }
 
     public void LeftClimbable()
@@ -254,10 +239,13 @@ public class PlayerMovement : MonoBehaviour
     #endregion
     //handles stomping
     #region Stomp
-    private void Stomp()
+    public void Stomp()
     {
-        _stomping = true;
-        _gravity = 50f;
+        if (GroundChecker() == false)
+        {
+            _stomping = true;
+            _gravity = 50f;
+        }
     }
     public void BounceOff()
     {
@@ -286,7 +274,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if(_grounded == false) // otherwise
         {
-            _input.Player.LeftRightMove.Disable(); // disable the ability to move left and right
+            _inputManager._input.Player.LeftRightMove.Disable(); // disable the ability to move left and right
            
             if (_jumped == true) /// can probably get rid of this line
             {
@@ -308,7 +296,7 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator EnableControls()
     {
         yield return new WaitForSeconds(0.125f);
-        _input.Player.LeftRightMove.Enable();
+        _inputManager._input.Player.LeftRightMove.Enable();
     }
     IEnumerator SetSize_WallChecker()
     {
@@ -337,13 +325,13 @@ public class PlayerMovement : MonoBehaviour
     public void IsGrounded()
     {
         //re-enable left right movement.
-        if(_input.Player.LeftRightMove.enabled == false)
+        if (_inputManager._input.Player.LeftRightMove.enabled == false)
         {
-            _input.Player.LeftRightMove.Enable();
+            _inputManager._input.Player.LeftRightMove.Enable();
         }
-        if(_input.Player.UpDownMove.enabled == true)
+        if (_inputManager._input.Player.UpDownMove.enabled == true)
         {
-            _input.Player.UpDownMove.Disable();
+            _inputManager._input.Player.UpDownMove.Disable();
         }
         _grounded = true;
         _jumped = false;
