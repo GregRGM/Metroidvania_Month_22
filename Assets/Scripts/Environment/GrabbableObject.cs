@@ -7,6 +7,7 @@ public class GrabbableObject : MonoBehaviour
     PlayerInteraction _playerInteraction;
     [SerializeField]
     private bool _canGrab = false;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PlayerHands"))
