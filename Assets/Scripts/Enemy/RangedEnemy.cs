@@ -8,6 +8,8 @@ public class RangedEnemy : EnemyBase
     private GameObject projectile;
     private float _canFire = -1f;
     private float fireRate = 1.0f;
+    [SerializeField]
+    private bool _followsPlayer;
     public override void Start()
     {
         base.Start();
@@ -16,15 +18,24 @@ public class RangedEnemy : EnemyBase
     public override void Attack()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, _player.transform.position);
-        transform.LookAt(_player.transform.position);
 
-        if (distanceToPlayer < 15 && Time.time > _canFire)
+        if(_followsPlayer == true)
         {
-          Fire();
+            transform.LookAt(_player.transform.position);
+
+            if (distanceToPlayer < 15 && Time.time > _canFire)
+            {
+                Fire();
+            }
         }
+
         else
         {
-            //charge up animation or something? 
+            //charge up animation or something?
+            if(Time.time > _canFire)
+            {
+                Fire();
+            }
         }
     }
 

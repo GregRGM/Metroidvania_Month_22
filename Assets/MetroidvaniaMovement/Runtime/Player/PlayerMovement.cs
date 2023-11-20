@@ -69,12 +69,13 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        _inputManager = FindAnyObjectByType<InputManager>();
+        _inputManager = FindObjectOfType<InputManager>();
         _animManager = GetComponent<PlayerAnimationManager>();
         _controller = GetComponent<CharacterController>();
         _playerInteraction = GetComponent<PlayerInteraction>();
         originalSize = wallDetectorCollider.size;
-        direction = new Vector3(0, 0, 0); 
+        direction = new Vector3(0, 0, 0);
+        _inputManager.EnablePlayerActions();
     }
 
     //use this to get the surface normal of the wall. 
