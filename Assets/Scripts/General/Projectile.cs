@@ -36,6 +36,15 @@ public class Projectile : MonoBehaviour
         _redirected = true;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        BreakableFloor breakableFloor = other.GetComponent<BreakableFloor>();
+        if ((breakableFloor != null))
+        {
+            breakableFloor.Break();
+        }
+    }
+
     //TO DO: Check if projectile has hit anything fter being redirected. If so, destroy it. 
     ///WISHLIST = Add this to a pool instead of destroying it.
 }
