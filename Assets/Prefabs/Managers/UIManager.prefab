@@ -369,7 +369,6 @@ MonoBehaviour:
   healthBar: {fileID: 4884060522147708799}
   currentHealth: {fileID: 11400000, guid: 99fc03f0541d45b48a6cb66ff84683ca, type: 2}
   maxHealth: {fileID: 11400000, guid: 2862bff856d7a49439085445acba49ab, type: 2}
-  _mouseSpeed: 0
 --- !u!1 &6912076159445472304
 GameObject:
   m_ObjectHideFlags: 0
