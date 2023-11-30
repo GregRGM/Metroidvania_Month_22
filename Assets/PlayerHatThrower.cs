@@ -9,12 +9,14 @@ public class PlayerHatThrower : MonoBehaviour
     public GameObject m_HatSpawnPoint, m_HatHeadPoint;
     public HatController m_HatController;
     [SerializeField] float m_ThrowForce = 1000f, m_ThrowSpeed = 1000f, m_ThrowBackSpeed = 1000f, m_ThrowDistance = 10f;
-    public bool IsHatThrown { get; private set; }
+    public bool m_IsHatThrown;
     // Start is called before the first frame update
     void Start()
     {
+        m_HatController = FindObjectOfType<HatController>();
+
         if(m_HatController != null)
-            m_HatController.setThrowValues(m_ThrowForce, m_ThrowSpeed, m_ThrowBackSpeed, m_ThrowDistance);
+            m_HatController.SetThrowValues(m_ThrowForce, m_ThrowSpeed, m_ThrowBackSpeed, m_ThrowDistance);
     }
 
     public void ThrowHat()
