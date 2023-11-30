@@ -39,8 +39,8 @@ public class HatController : MonoBehaviour
     IEnumerator ThrowForwardCoroutine()
     {
         float t = 0;
-        Vector3 startPosition = transform.position;
-        Vector3 endPosition = m_HatThrower.transform.position;
+        Vector3 startPosition = m_HatThrower.m_HatSpawnPoint.transform.position;
+        Vector3 endPosition = m_HatThrower.transform.position + new Vector3(0, 0, m_ThrowDistance);
         while(t < 1)
         {
             t += Time.deltaTime * m_ThrowSpeed;

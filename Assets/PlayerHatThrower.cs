@@ -13,7 +13,7 @@ public class PlayerHatThrower : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_HatController = FindObjectOfType<HatController>();
+        //m_HatController = FindObjectOfType<HatController>();
 
         if(m_HatController != null)
             m_HatController.SetThrowValues(m_ThrowForce, m_ThrowSpeed, m_ThrowBackSpeed, m_ThrowDistance);
