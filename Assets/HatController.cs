@@ -36,10 +36,26 @@ public class HatController : MonoBehaviour
         StartCoroutine(ThrowForwardCoroutine());
     }
 
+    public void LerpHatBack()
+    {
+        StartCoroutine(ThrowReturnCoroutine());
+    }
+
+    public void UnParentHat()
+    {
+        transform.parent = null;
+    }
+
+    public void ParentHat()
+    {
+        transform.parent = m_HatThrower.transform;
+        transform.position = m_HatThrower.m_HatHeadPoint.transform.position;
+    }
+
     IEnumerator ThrowForwardCoroutine()
     {
         float t = 0;
-        Vector3 startPosition = m_HatThrower.m_HatSpawnPoint.transform.position;
+        Vector3 startPosition = m_HatThrower.m_HatThrowPoint.transform.position;
         Vector3 endPosition = m_HatThrower.transform.position + new Vector3(0, 0, m_ThrowDistance);
         while(t < 1)
         {
@@ -47,7 +63,7 @@ public class HatController : MonoBehaviour
             transform.position = Vector3.Lerp(startPosition, endPosition, t);
             yield return null;
         }
-        m_HatThrower.m_IsHatThrown = false;
+        m_HatThrower.m_IsHatThrown = true;
     }
 
     IEnumerator ThrowReturnCoroutine()

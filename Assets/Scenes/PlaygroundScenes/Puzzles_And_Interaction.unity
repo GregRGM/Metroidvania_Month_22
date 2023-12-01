@@ -428,8 +428,8 @@ Camera:
   m_GameObject: {fileID: 330585543}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.013171938, g: 0.18867922, b: 0.04434423, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -3638,6 +3638,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 916042165346189740, guid: 467fb5d2868ea954ca96088674549319,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 916042165346189740, guid: 467fb5d2868ea954ca96088674549319,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 916042165346189740, guid: 467fb5d2868ea954ca96088674549319,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1743917732258940221, guid: 467fb5d2868ea954ca96088674549319,
         type: 3}
       propertyPath: m_Radius
@@ -3718,6 +3733,11 @@ PrefabInstance:
       propertyPath: m_Size.z
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 5253610602977226894, guid: 467fb5d2868ea954ca96088674549319,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5923286699148854349, guid: 467fb5d2868ea954ca96088674549319,
         type: 3}
       propertyPath: m_Enabled
@@ -3771,6 +3791,11 @@ PrefabInstance:
     - target: {fileID: 5988062644370388978, guid: 467fb5d2868ea954ca96088674549319,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6950852720403264399, guid: 467fb5d2868ea954ca96088674549319,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7308395948868460635, guid: 467fb5d2868ea954ca96088674549319,
